@@ -4028,9 +4028,9 @@ function opcManifest({ version, binaryName, sha256 }) {
   // opc 自身已不拥有任何域包（14 份全部分给各域插件），该目录在 Git 中为空 ⇒
   // 干净 checkout 里根本不存在。无条件 readdirSync 会让 Release 的 beforeBuildCommand
   // 以 ENOENT 失败（2026-11-22 实测 6 个桌面 target 全红）；目录不存在等价于零份域包。
-  const opcSourceRoot = resolvePluginSourceRoot("opc");
-  const opcDomainPackDir = opcSourceRoot ? path.join(opcSourceRoot, "plugin-opc", "domain_packs") : null;
-  const domainPackManifests = (fs.existsSync(opcDomainPackDir) ? fs.readdirSync(opcDomainPackDir) : [])
+  const domainPackManifests = (fs.existsSync(path.join(workspaceRoot, "plugin-opc", "domain_packs"))
+      ? fs.readdirSync(path.join(workspaceRoot, "plugin-opc", "domain_packs"))
+      : [])
     .filter((f) => f.endsWith(".json"))
     .sort()
     .map((f) => path.posix.join(DOMAIN_PACK_DIR, f));
