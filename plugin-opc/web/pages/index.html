@@ -28,5 +28,10 @@
       OPC 的真实界面（住主壳 <code>src/pages/opc/**</code> 的 16 页）将在后续批次迁入本插件的
       构建产物；此探针页只验证装载通道，判据④「挪出主仓页面全丢」从此闭合。
     </p>
+    <script>
+      // 公共 OPC 页是纯静态探针，没有构建产物可创建 vendored 客户端；这里只发与
+      // SDK 同形的 ready 帧，让宿主不要等满 30 秒。它不开放任何命令，也不接收回包。
+      window.parent.postMessage({ type: "skill:ready" }, "*");
+    </script>
   </body>
 </html>
